@@ -22,8 +22,8 @@ using NUnit.Framework; //test classes need to have the using statement
 ///
 ///     What was difficult about this challenge?
 ///     
-///     It was difficult figuring out how the regex split worked and
-///     why nothing else i was trying did
+///     It was difficult figuring out how to display the correct defition from the dictionary
+///     
 ///
 ///     
 ///
@@ -42,18 +42,41 @@ namespace DailyProgrammer_Template
     {
         static void Main(string[] args)
         {
-            Console.WriteLine(RealMeaning("lol"));
-            Console.WriteLine(RealMeaning("asap"));
-            Console.WriteLine(RealMeaning("tbt"));
+            Dictionary<string, string> acronymnDefinitions = Acronyms();
 
-            Console.ReadKey();
+            while (true)
+            {
+                
+                Console.Write("Enter chat phrase: ");
+                //allows you to enter the accronym which you want defined
+                string input = Console.ReadLine();
+
+                //splitting and putting into an array
+                string[] words = input.Split(' ');
+
+                for (int i = 0; i < words.Length; i++)
+                {
+                    //checking if the acronym is defined in the dictionary
+                    if (acronymnDefinitions.Keys.Contains(words[i]))
+                    {
+                        //making the acronym equal to the defintion
+                        words[i] = acronymnDefinitions[words[i]];
+                    }
+                }
+
+                Console.WriteLine(string.Join(" ", words));
+
+                Console.ReadKey();
+            }
         }
         /// <summary>
         /// dictionary that holds the acronym and then its real definitin
         /// </summary>
         /// defining a dictionary where both the the entry and its defintion are strings
-        public static Dictionary<string, string> Acronyms = new Dictionary<string, string>()
+        public static Dictionary<string, string> Acronyms()
         {
+            var dict = new Dictionary<string, string>
+            {
             {"g2g", "got to go"},
             {"brb", "be right back"},
             {"omw", "on my way"},
@@ -70,38 +93,9 @@ namespace DailyProgrammer_Template
             {"asap", "as soon as possible"},
             
         };
-
-        /// <summary>
-        /// checks if the input is in the dictionary, then find and displays its corresponding definition
-        /// </summary>
-        /// <param name="shortenDef"></param>
-        /// <returns></returns>
-        public static string RealMeaning(string shortenDef)
-        {
-            //empty string to hold info
-            string finalString = string.Empty;
-
-            
-            string[] splitString = Regex.Split(shortenDef, ",");
-            
-            //will pring out every index of the new array
-            for (int i = 0; i < splitString.Length; i++)
-            {
-
-                string temp1 = splitString[i];
-                //checking if the dictionary contains the acronym
-                if (Acronyms.ContainsKey(temp1))
-                {
-                    //temp string is equal to the index of the dictionarys defintion
-                    temp1 = Acronyms[temp1];
-                    //the index is equal to the definition
-                    splitString[i] = temp1;
-                }
-            }
-            //puts the array back together and puts a space inbetween the words
-            finalString = String.Join("", splitString);
-            return finalString;
-        }
+            return dict;
+    }
+     
 
         /// <summary>
         /// Simple function to illustrate how to use tests
