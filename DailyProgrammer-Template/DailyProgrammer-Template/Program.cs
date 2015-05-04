@@ -42,14 +42,22 @@ namespace DailyProgrammer_Template
     {
         static void Main(string[] args)
         {
-            Dictionary<string, string> acronymnDefinitions = Acronyms();
+            AcronymCheck("lol");
 
+                Console.ReadKey();
+        }
+
+        string input = Console.ReadLine();
+        public static string AcronymCheck(string input)
+        {
+             Dictionary<string, string> acronymnDefinitions = Acronyms();
+            
             while (true)
             {
                 
                 Console.Write("Enter chat phrase: ");
                 //allows you to enter the accronym which you want defined
-                string input = Console.ReadLine();
+
 
                 //splitting and putting into an array
                 string[] words = input.Split(' ');
@@ -62,13 +70,19 @@ namespace DailyProgrammer_Template
                         //making the acronym equal to the defintion
                         words[i] = acronymnDefinitions[words[i]];
                     }
+                    else
+                    {
+                        return string.Empty;
+                    }
                 }
 
                 Console.WriteLine(string.Join(" ", words));
-
-                Console.ReadKey();
+                return string.Join(" ", words);
             }
+
+          
         }
+
         /// <summary>
         /// dictionary that holds the acronym and then its real definitin
         /// </summary>
@@ -77,35 +91,26 @@ namespace DailyProgrammer_Template
         {
             var dict = new Dictionary<string, string>
             {
-            {"g2g", "got to go"},
-            {"brb", "be right back"},
-            {"omw", "on my way"},
-            {"wth", "what the hell"},
-            {"ttyl", "talk to you later"},
-            {"atm", "at the moment"},
-            {"lmao", "laughing my ass off"},
-            {"rofl", "rolling on the floor laughing"},
-            {"lol", "laugh out loud"},
-            {"idk", "I don't know"},
-            {"tbt", "throw back Thursday"},
-            {"fbf", "flash back Friday"},
-            {"wcw", "woman crush Wednesday"},
-            {"asap", "as soon as possible"},
+                {"g2g", "got to go"},
+                {"brb", "be right back"},
+                {"omw", "on my way"},
+                {"wth", "what the hell"},
+                {"ttyl", "talk to you later"},
+                {"atm", "at the moment"},
+                {"lmao", "laughing my ass off"},
+                {"rofl", "rolling on the floor laughing"},
+                {"lol", "laugh out loud"},
+                {"idk", "I don't know"},
+                {"tbt", "throw back Thursday"},
+                {"fbf", "flash back Friday"},
+                {"wcw", "woman crush Wednesday"},
+                {"asap", "as soon as possible"},           
+            };
             
-        };
             return dict;
     }
-     
+    }
 
-        /// <summary>
-        /// Simple function to illustrate how to use tests
-        /// </summary>
-        /// <param name="inputInteger"></param>
-        /// <returns></returns>
-        public static int MyTestFunction(int inputInteger)
-        {
-            return inputInteger;
-        }
 
         #region " TEST CLASS "
 
@@ -118,9 +123,9 @@ namespace DailyProgrammer_Template
             public void MyValidTest()
             {
                 //inside of the test, we can declare any variables that we'll need to test.  Typically, we will reference a function in your main program to test.
-                int result = Program.MyTestFunction(15);  // this function should return 15 if it is working correctly
+                string result = Program.AcronymCheck("lol");  // this function should return 15 if it is working correctly
                 //now we test for the result.
-                Assert.IsTrue(result == 15, "This is the message that displays if it does not pass");
+                Assert.IsTrue(result == "laugh out loud", "This is the message that displays if it does not pass");
                 // The format is:
                 // Assert.IsTrue(some boolean condition, "failure message");
             }
@@ -128,10 +133,10 @@ namespace DailyProgrammer_Template
             [Test]
             public void MyInvalidTest()
             {
-                int result = Program.MyTestFunction(15);
-                Assert.IsFalse(result == 14);
+                string result = Program.AcronymCheck("asd");
+                //string result = Program.Acronyms();
+                Assert.IsFalse(result == "laugh out loud");
             }
         }
         #endregion
     }
-}
